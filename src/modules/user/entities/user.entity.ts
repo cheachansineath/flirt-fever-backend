@@ -14,28 +14,28 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
-  verify: boolean;
+  @Column({ nullable: true })
+  verify: boolean | null;
 
-  @Column()
-  gender: string;
+  @Column({ nullable: true })
+  gender: string | null;
 
-  @Column()
-  height: number;
+  @Column({ nullable: true })
+  height: number | null;
 
-  @Column()
-  weight: number;
+  @Column({ nullable: true })
+  weight: number | null;
 
-  @Column()
-  age: number;
+  @Column({ nullable: true })
+  age: number | null;
 
-  @Column()
-  location: string;
+  @Column({ nullable: true })
+  location: string | null;
 
-  @Column()
-  profile_url: string;
+  @Column({ nullable: true })
+  profile_url: string | null;
 
-  @Column({ length: 100 })
-  bio: string;
+  @Column({ length: 100, nullable: true })
+  bio: string | null;
   
 }

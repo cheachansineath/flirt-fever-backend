@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, InternalServerErrorException, BadRequestException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
@@ -35,15 +35,15 @@ export class AuthService {
             console.log(user);
             try {
               const pin = await this.otpService.sendOtp(email);
-              const newUser =  await this.userService.saveUser(user);
+              await this.userService.saveUser(user);
               await this.otpService.saveOtp(user, pin)
-              return newUser;
+              return { message: "Sign up successfully"};
             } catch {
               throw new InternalServerErrorException();
             }
         }
-        throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'Username is already taken' });
+        throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'Username is already taken'});
     }
-    throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'Email is already taken' });
+    throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'Email is already taken'});
   }
 }

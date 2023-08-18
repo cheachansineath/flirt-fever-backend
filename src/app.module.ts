@@ -26,7 +26,7 @@ import { JwtStrategy } from './modules/auth/jwt.strategy';
     {
       provide: APP_GUARD,
       useClass: JwtStrategy
-    }
-  ],
+    },
+  ]
 })
 export class AppModule {}

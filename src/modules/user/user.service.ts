@@ -25,12 +25,14 @@ export class UserService {
 
   async findByUsername(username: string): Promise<User | undefined> {
     const user = await this.userRepository.findOne({ where: { username } });
-    return this.validateUser(user);
+    // return this.validateUser(user);
+    return user
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
     const user = await this.userRepository.findOne({ where: { email }});
-    return this.validateUser(user);
+    // return this.validateUser(user);
+    return user
   }
 
   async saveUser(user: User): Promise<User | undefined> {
@@ -61,7 +63,7 @@ export class UserService {
     user.location = location;
     user.profile_url = process.env.FILE_URL + filename
     user.bio = bio;
-    return user;
+    return await this.saveUser(user);
   }
 
   async validateImage(filename: string) {

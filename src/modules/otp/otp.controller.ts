@@ -13,10 +13,10 @@ export class OtpController {
   async create(@Body() otpDto: OtpDto) {
     const user = await this.userService.findByEmail(otpDto.email);
     if (user != null){
-      const verify = await this.otpService.verifyOtp(user, otpDto.pin);
+      const verify = await this.otpService.verifyOtp(user.id, otpDto.pin);
       await this.userService.updateVerify(verify, user.id);
       return {verify: verify}
     }
-    throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'Username is already taken' })
+    throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'User not found' })
   }
 }

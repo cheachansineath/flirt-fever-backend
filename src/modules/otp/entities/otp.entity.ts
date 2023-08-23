@@ -1,5 +1,4 @@
-import { User } from 'src/modules/user/entities/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 
 @Entity()
 export class Otp {
@@ -9,7 +8,6 @@ export class Otp {
   @Column()
   pin: string;
 
-  @ManyToOne(() => User, user => user.id, {cascade: true})
-  @JoinColumn()
-  user: User;
+  @Column()
+  user: number;
 }

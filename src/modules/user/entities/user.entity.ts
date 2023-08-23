@@ -20,10 +20,10 @@ export class User {
   @Column({ nullable: true })
   gender: string | null;
 
-  @Column({ nullable: true })
+  @Column('float', { nullable: true })
   height: number | null;
 
-  @Column({ nullable: true })
+  @Column('float', { nullable: true })
   weight: number | null;
 
   @Column({ nullable: true })
@@ -37,5 +37,8 @@ export class User {
 
   @Column({ length: 100, nullable: true })
   bio: string | null;
+
+  @Column('integer', { nullable: true, array: true, default: [] })
+  connect: number[];
   
 }

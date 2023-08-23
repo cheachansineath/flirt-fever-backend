@@ -39,4 +39,18 @@ export class UserController {
     const fileStream = fs.createReadStream(imagePath);
     fileStream.pipe(res);
   }
+
+  @Get('/username/:username')
+  async getUserByUsername(@Param('username') username: string) {
+    const user = this.userService.findByUsername(username);
+    if (user === null) {
+      throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'User not found' });
+    }
+    return user;
+  }
+
+  @Get('verify')
+  async getAllVerifiedUsers() {
+    return await this.userService.findVerify();
+  }
 }

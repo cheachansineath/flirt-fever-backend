@@ -52,20 +52,20 @@ export class OtpService {
 
   async saveOtp(user: User, pin: string): Promise<Otp | undefined> {
     const otp = new Otp();
-    otp.user = user
+    otp.user = user.id
     otp.pin = pin
     return await this.otpRepository.save(otp);
   }
 
-  async verifyOtp(user: User, pin: string): Promise<any> {
-    const otp = await this.findByUser(user);
+  async verifyOtp(user_id: number, pin: string): Promise<any> {
+    const otp = await this.findByUserId(user_id);
     if (otp.pin === pin) {
       return true
     }
     return false
   }
 
-  async findByUser(user: User): Promise<Otp | undefined> {
+  async findByUserId(user: number): Promise<Otp | undefined> {
     return await this.otpRepository.findOne({ where: { user }})
   }
 }

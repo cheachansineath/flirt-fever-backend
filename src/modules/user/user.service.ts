@@ -24,13 +24,20 @@ export class UserService {
   }
 
   async findByUsername(username: string): Promise<User | undefined> {
-    const user = await this.userRepository.findOne({ where: { username } });
+    username = username.toLowerCase()
+    const user = await this.userRepository.findOne({ 
+      where: { username },
+      select: ['id', 'username', 'email', 'verify', 'age', 'gender', 'height', 'weight', 'location', 'bio', 'profile_url']
+    });
     // return this.validateUser(user);
     return user
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
-    const user = await this.userRepository.findOne({ where: { email }});
+    const user = await this.userRepository.findOne({ 
+      where: { email },
+      select: ['id', 'username', 'email', 'verify', 'age', 'gender', 'height', 'weight', 'location', 'bio', 'profile_url']
+    });
     // return this.validateUser(user);
     return user
   }
@@ -40,7 +47,10 @@ export class UserService {
   }
 
   async findById(id: number): Promise<User | undefined> {
-    const user = await this.userRepository.findOne({ where: { id }});
+    const user = await this.userRepository.findOne({ 
+      where: { id },
+      select: ['id', 'username', 'email', 'verify', 'age', 'gender', 'height', 'weight', 'location', 'bio', 'profile_url']
+    });
     return this.validateUser(user);
   }
 
@@ -69,5 +79,14 @@ export class UserService {
   async validateImage(filename: string) {
     if (filename.endsWith('.png') || filename.endsWith('.jpg') || filename.endsWith('.jpeg')) return true
     return false
+  }
+
+  async findVerify(): Promise<User[] | any> {
+    return this.userRepository.find({
+      where: {
+        verify: true
+      },
+      select: ['id', 'username', 'email', 'verify', 'age', 'gender', 'height', 'weight', 'location', 'bio', 'profile_url']
+    });
   }
 }

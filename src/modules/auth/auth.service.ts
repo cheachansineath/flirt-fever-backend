@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, InternalServerErrorException, BadRequestException } from '@nestjs/common';
+import { Injectable, ForbiddenException, InternalServerErrorException, BadRequestException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
@@ -12,10 +12,10 @@ export class AuthService {
     private otpService: OtpService,
     ) {}
 
-  async signIn(username: string, password: string): Promise<any> {
-    const user = await this.userService.findByUsername(username);
+  async signIn(email: string, password: string): Promise<any> {
+    const user = await this.userService.findByEmail(email);
     if (user === null || user?.password !== password) {
-      throw new UnauthorizedException();
+      throw new ForbiddenException();
     }
     const payload = { sub: user.id, username: user.username };
     return {
@@ -29,10 +29,9 @@ export class AuthService {
         const userByUsername = await this.userService.findByUsername(username);
         if (userByUsername === null) {
             let user = new User();
-            user.username = username
+            user.username = username.toLowerCase()
             user.email = email
             user.password = password
-            console.log(user);
             try {
               const pin = await this.otpService.sendOtp(email);
               await this.userService.saveUser(user);

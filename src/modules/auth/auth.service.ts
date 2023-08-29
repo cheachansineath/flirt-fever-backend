@@ -14,7 +14,7 @@ export class AuthService {
 
   async signIn(email: string, password: string): Promise<any> {
     const user = await this.userService.findByEmail(email);
-    if (user === null || user?.password !== password) {
+    if (user == null || user?.password !== password) {
       throw new ForbiddenException();
     }
     const payload = { sub: user.id, username: user.username };
@@ -25,9 +25,9 @@ export class AuthService {
 
   async signUp(username: string, password: string, email: string): Promise<any> {
     const userByEmail = await this.userService.findByEmail(email);
-    if (userByEmail === null) {
+    if (userByEmail == null) {
         const userByUsername = await this.userService.findByUsername(username);
-        if (userByUsername === null) {
+        if (userByUsername == null) {
             let user = new User();
             user.username = username.toLowerCase()
             user.email = email

@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -38,7 +39,16 @@ export class User {
   @Column({ length: 100, nullable: true })
   bio: string | null;
 
-  @Column('integer', { nullable: true, array: true, default: [] })
-  connect: number[];
+  @Column('simple-array', { nullable: true, default: [] })
+  interest: string[];
+
+  @Column('integer', { default: 1 })
+  page: number;
+
+  @Column({ nullable: true })
+  preference: string;
+
+  @Column({ type: 'timestamp', name: 'deletedAt', nullable: true})
+  deletedAt: Date;
   
 }

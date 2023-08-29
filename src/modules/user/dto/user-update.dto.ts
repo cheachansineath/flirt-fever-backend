@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MinLength, MaxLength, IsNumber } from "class-validator";
+import { IsNotEmpty, IsString, MinLength, MaxLength, IsNumber, IsEmpty } from "class-validator";
 
 export class UserUpdateDto {
     @IsNotEmpty()
@@ -18,6 +18,9 @@ export class UserUpdateDto {
     @IsString()
     location: string
 
-    @IsString()
     bio: string
+
+    preference: string
+
+    interest: string[]
 }

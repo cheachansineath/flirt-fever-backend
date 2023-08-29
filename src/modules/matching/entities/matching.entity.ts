@@ -14,9 +14,12 @@ export class Matching {
   @JoinColumn()
   toUser: User;
 
-  @Column()
-  agreement: boolean;
+  @Column({ default: false })
+  accept: boolean;
 
-  @Column()
-  response: boolean;
+  @Column({ type: 'timestamp', name: 'deletedAt', nullable: true})
+  deletedAt: Date;
+
+  @Column({ type: 'timestamp', name: 'requestedAt' })
+  requestedAt: Date;
 }

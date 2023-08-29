@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { MatchingService } from './matching.service';
 import { CreateMatchingDto } from './dto/create-matching.dto';
 import { UpdateMatchingDto } from './dto/update-matching.dto';
@@ -8,27 +8,23 @@ export class MatchingController {
   constructor(private readonly matchingService: MatchingService) {}
 
   @Post()
-  create(@Body() createMatchingDto: CreateMatchingDto) {
-    return this.matchingService.create(createMatchingDto);
+  async sendMatch(@Req() request, @Body() { toUserId }) {
+    return await this.matchingService.create(request.user.sub, toUserId);
   }
 
-  @Get()
-  findAll() {
-    return this.matchingService.findAll();
+  @Post('accept/:id')
+  async acceptMatching(@Param('id') id: number) {
+    return await this.matchingService.confirm(id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.matchingService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMatchingDto: UpdateMatchingDto) {
-    return this.matchingService.update(+id, updateMatchingDto);
+  @Get('requests')
+  async getMatchingRequest(@Req() request){
+    return await this.matchingService.getUserMatchingRequest(request.user.sub);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.matchingService.remove(+id);
+  async deleteMatching(@Param('id') id: number) {
+    return await this.matchingService.deleteMatching(id);
   }
+
 }

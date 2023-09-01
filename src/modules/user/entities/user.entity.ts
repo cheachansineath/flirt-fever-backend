@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

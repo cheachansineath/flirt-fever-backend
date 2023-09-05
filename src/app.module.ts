@@ -6,27 +6,34 @@ import { OtpModule } from './modules/otp/otp.module';
 import { PostModule } from './modules/post/post.module';
 import { VoteModule } from './modules/vote/vote.module';
 // import { dataSourceOptions } from '../db/data-source'
-import { typeOrmAsyncConfig, typeOrmConfig } from './config/typeorm.config'
+import { typeOrmAsyncConfig, typeOrmConfig } from './config/typeorm.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './modules/auth/auth.guard';
 import { JwtStrategy } from './modules/auth/jwt.strategy';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync(typeOrmAsyncConfig), 
-    UserModule, MatchingModule, OtpModule, PostModule, VoteModule, AuthModule
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+    UserModule,
+    MatchingModule,
+    OtpModule,
+    PostModule,
+    VoteModule,
+    AuthModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [
     {
       provide: APP_GUARD,
-      useClass: AuthGuard
+      useClass: AuthGuard,
     },
     {
       provide: APP_GUARD,
-      useClass: JwtStrategy
+      useClass: JwtStrategy,
     },
-  ]
+  ],
 })
 export class AppModule {}

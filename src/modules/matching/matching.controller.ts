@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Req,
+} from '@nestjs/common';
 import { MatchingService } from './matching.service';
 import { CreateMatchingDto } from './dto/create-matching.dto';
 import { UpdateMatchingDto } from './dto/update-matching.dto';
@@ -18,13 +27,17 @@ export class MatchingController {
   }
 
   @Get('requests')
-  async getMatchingRequest(@Req() request){
+  async getMatchingRequest(@Req() request) {
     return await this.matchingService.getUserMatchingRequest(request.user.sub);
+  }
+
+  @Get(':id')
+  async getMatching(@Param('id') id: number) {
+    return await this.matchingService.findById(id);
   }
 
   @Delete(':id')
   async deleteMatching(@Param('id') id: number) {
     return await this.matchingService.deleteMatching(id);
   }
-
 }

@@ -19,8 +19,9 @@ export class MatchingService {
   async create(fromUserId: number, toUserId: number): Promise<Matching | undefined> {
     const fromUser = await this.userService.findById(fromUserId);
     const toUser = await this.userService.findById(toUserId);
-    const checkMatching = await this.findByFromAndTo(fromUser, toUser);
-    if (checkMatching != null) throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'Matching record already exist' })
+    const checkMatching1 = await this.findByFromAndTo(fromUser, toUser);
+    const checkMatching2 = await this.findByFromAndTo(toUser, fromUser);
+    if (checkMatching1 != null || checkMatching2 != null) throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'Matching record already exist' })
     const matching = new Matching();
     matching.fromUser = fromUser;
     matching.toUser = toUser;
@@ -36,7 +37,7 @@ export class MatchingService {
   }
 
   async findById(id: number): Promise<Matching | null> {
-    const matching = await this.matchingRepository.findOne( { where: {id} })
+    const matching = await this.matchingRepository.findOne( { where: {id}, relations: ['toUser', 'fromUser'] })
     return matching || null;
   }
 
@@ -56,9 +57,11 @@ export class MatchingService {
       where: {
         toUser: user,
         deletedAt: null
-      }
+      },
+      select: ['id', 'fromUser', 'requestedAt', 'accept'],
+      relations: ['fromUser']
     })
-
+    console.log(matchingRequest);
     return matchingRequest || null;
   }
 

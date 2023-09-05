@@ -3,6 +3,8 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { OtpService } from '../otp/otp.service';
+import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class AuthService {
@@ -12,9 +14,15 @@ export class AuthService {
     private otpService: OtpService,
     ) {}
 
+  async hashing(password: string) {
+      const salt = process.env.SALT
+      const hash = await bcrypt.hash(password, salt);
+      return hash;
+  }
+
   async signIn(email: string, password: string): Promise<any> {
     const user = await this.userService.findByEmail(email);
-    if (user == null || user?.password !== password) {
+    if (user == null || user?.password !== await this.hashing(password)) {
       throw new ForbiddenException();
     }
     const payload = { sub: user.id, username: user.username };
@@ -31,7 +39,7 @@ export class AuthService {
             let user = new User();
             user.username = username.toLowerCase()
             user.email = email
-            user.password = password
+            user.password = await this.hashing(password)
             try {
               const pin = await this.otpService.sendOtp(email);
               await this.userService.saveUser(user);

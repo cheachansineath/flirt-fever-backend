@@ -168,4 +168,23 @@ export class UserService {
     }
     throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'User not found' })
   }
+
+  async dataForApi(user: User): Promise<any> {
+    const response = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      gender: user.gender,
+      height: user.height,
+      weight: user.weight,
+      age: user.age,
+      location: user.location,
+      profile_url: user.profile_url,
+      interest: user.interest,
+      bio: user.bio,
+      preference: user.preference
+    }
+
+    return response;
+  }
 }

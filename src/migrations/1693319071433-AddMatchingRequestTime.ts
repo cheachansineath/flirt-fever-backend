@@ -4,7 +4,7 @@ export class AddMatchingRequestTime1693319071433 implements MigrationInterface {
     name = 'AddMatchingRequestTime1693319071433'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE "matching" ADD "requestedAt" TIMESTAMP NOT NULL DEFAULT '"2023-08-29T14:24:33.481Z"'`);
+        await queryRunner.query(`ALTER TABLE "matching" ADD "requestedAt" TIMESTAMP NOT NULL'`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

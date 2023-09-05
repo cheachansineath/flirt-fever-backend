@@ -1,6 +1,8 @@
-import { Transform } from 'class-transformer';
 import { RoomEntity } from 'src/modules/chat/model/room.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Exclude, Transform } from 'class-transformer';
+
+
 
 @Entity()
 export class User {

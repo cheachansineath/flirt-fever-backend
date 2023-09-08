@@ -10,7 +10,6 @@ import { JwtService } from '@nestjs/jwt';
 import { OtpService } from '../otp/otp.service';
 import * as bcrypt from 'bcrypt';
 
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -20,9 +19,9 @@ export class AuthService {
   ) {}
 
   async hashing(password: string) {
-      const salt = await bcrypt.genSalt();
-      const hash = await bcrypt.hash(password, salt);
-      return hash;
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(password, salt);
+    return hash;
   }
 
   async signIn(email: string, password: string): Promise<any> {
@@ -43,21 +42,19 @@ export class AuthService {
   ): Promise<any> {
     const userByEmail = await this.userService.findByEmail(email);
     if (userByEmail == null) {
-
-        const userByUsername = await this.userService.findByUsername(username);
-        if (userByUsername == null) {
-            let user = new User();
-            user.username = username.toLowerCase()
-            user.email = email
-            user.password = await this.hashing(password)
-            try {
-              const pin = await this.otpService.sendOtp(email);
-              await this.userService.saveUser(user);
-              await this.otpService.saveOtp(user, pin)
-              return { message: "Sign up successfully"};
-            } catch {
-              throw new InternalServerErrorException();
-            }
+      const userByUsername = await this.userService.findByUsername(username);
+      if (userByUsername == null) {
+        let user = new User();
+        user.username = username.toLowerCase();
+        user.email = email;
+        user.password = await this.hashing(password);
+        try {
+          const pin = await this.otpService.sendOtp(email);
+          await this.userService.saveUser(user);
+          await this.otpService.saveOtp(user, pin);
+          return { message: 'Sign up successfully' };
+        } catch {
+          throw new InternalServerErrorException();
         }
       }
       throw new BadRequestException('Something bad happened', {
@@ -70,7 +67,6 @@ export class AuthService {
       description: 'Email is already taken',
     });
   }
-
   verifyJwt(jwt: string): Promise<any> {
     return this.jwtService.verifyAsync(jwt);
   }

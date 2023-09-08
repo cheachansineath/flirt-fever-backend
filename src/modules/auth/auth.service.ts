@@ -20,14 +20,14 @@ export class AuthService {
   ) {}
 
   async hashing(password: string) {
-      const salt = process.env.SALT
+      const salt = await bcrypt.genSalt();
       const hash = await bcrypt.hash(password, salt);
       return hash;
   }
 
   async signIn(email: string, password: string): Promise<any> {
     const user = await this.userService.findByEmail(email);
-    if (user == null || user?.password !== await this.hashing(password)) {
+    if (user == null || !(await bcrypt.compare(password, user.password))) {
       throw new ForbiddenException();
     }
     const payload = { sub: user.id, username: user.username };

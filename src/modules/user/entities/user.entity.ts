@@ -1,8 +1,5 @@
-import { RoomEntity } from 'src/modules/chat/model/room.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 import { Exclude, Transform } from 'class-transformer';
-
-
 
 @Entity()
 export class User {
@@ -53,7 +50,4 @@ export class User {
 
   @Column({ type: 'timestamp', name: 'deletedAt', nullable: true })
   deletedAt: Date;
-
-  @ManyToMany(() => RoomEntity, (room) => room.users)
-  rooms: RoomEntity[];
 }

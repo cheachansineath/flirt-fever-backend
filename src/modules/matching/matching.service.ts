@@ -71,12 +71,18 @@ export class MatchingService {
   async getUserMatchingRequest(userId: number): Promise<Matching[] | null> {
     const user = await this.userService.findById(userId);
     const matchingRequest = await this.matchingRepository.find({
-      where: {
+      where: [
+        {
         toUser: user,
         deletedAt: null,
-      },
-      select: ['id', 'fromUser', 'requestedat', 'accept'],
-      relations: ['fromUser'],
+        },
+        {
+          fromUser: user,
+          deletedAt: null
+        }
+      ],
+      select: ['id', 'fromUser', 'toUser', 'requestedat', 'accept'],
+      relations: ['fromUser', 'toUser'],
     });
     console.log(matchingRequest);
     return matchingRequest || null;

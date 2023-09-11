@@ -1,5 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { Exclude, Transform } from 'class-transformer';
+import { Message } from 'src/modules/messages/entities/message.entity';
 
 @Entity()
 export class User {
@@ -50,4 +58,8 @@ export class User {
 
   @Column({ type: 'timestamp', name: 'deletedAt', nullable: true })
   deletedAt: Date;
+
+  @OneToMany(() => Message, (message) => message.author)
+  @JoinColumn()
+  messages: Message[];
 }

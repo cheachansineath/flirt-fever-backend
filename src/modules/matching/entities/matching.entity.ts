@@ -1,3 +1,4 @@
+import { Message } from 'src/modules/messages/entities/message.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import {
   Entity,
@@ -5,9 +6,11 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
+  OneToOne,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'matching' })
 export class Matching {
   @PrimaryGeneratedColumn()
   id: number;
@@ -28,4 +31,16 @@ export class Matching {
 
   @Column({ type: 'timestamp', name: 'requestedat' })
   requestedat: Date;
+
+  @OneToMany(() => Message, (message) => message.matching, {
+    cascade: ['insert', 'remove', 'update'],
+  })
+  messages: Message[];
+
+  @Column({ name: 'created_at', nullable: true })
+  createdAt: number;
+
+  @OneToOne(() => Message)
+  @JoinColumn({ name: 'last_message_sent' })
+  lastMessageSent: Message;
 }

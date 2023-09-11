@@ -10,6 +10,8 @@ COPY package*.json ./
 # Install project dependencies
 RUN npm install
 
+RUN npm run migration:run
+
 # Copy the rest of the application code
 COPY . .
 

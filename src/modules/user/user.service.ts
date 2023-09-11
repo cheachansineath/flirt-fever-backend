@@ -54,6 +54,9 @@ export class UserService {
         'location',
         'bio',
         'profile_url',
+        'interest',
+        'page',
+        'preference',
       ],
     });
     // return this.validateUser(user);
@@ -287,10 +290,9 @@ export class UserService {
       profile_url: user.profile_url,
       interest: user.interest,
       bio: user.bio,
-      preference: user.preference
-    }
+      preference: user.preference,
+    };
 
     return response;
   }
 }
-

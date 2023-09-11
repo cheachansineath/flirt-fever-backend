@@ -55,6 +55,10 @@ export class MessageService implements IMessage {
       author: user,
     });
 
-    return this.messageRepository.save(newMessage);
+    const savedMessage = await this.messageRepository.save(newMessage);
+    matching.lastMessageSent = savedMessage;
+    // matching.lastMessageSent = savedMessage;
+    await this.matchingRepository.save(matching);
+    return;
   }
 }

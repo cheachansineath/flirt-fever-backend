@@ -43,4 +43,5 @@ export class Matching {
   @OneToOne(() => Message)
   @JoinColumn({ name: 'last_message_sent' })
   lastMessageSent: Message;
+  matching: Promise<Message>;
 }

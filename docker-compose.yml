@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - postgres
+    network_mode: "host"
     restart: always
     ports:
       - '3001:3001'

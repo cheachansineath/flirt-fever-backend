@@ -1,6 +1,12 @@
 import { Matching } from 'src/modules/matching/entities/matching.entity';
 import { User } from 'src/modules/user/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'messages' })
 export class Message {
@@ -10,7 +16,7 @@ export class Message {
   @Column()
   content: string;
 
-  @Column({ name: 'create_at', nullable: true })
+  @CreateDateColumn({ name: 'create_at' })
   createAt: number;
 
   @ManyToOne(() => User, (user) => user.messages)

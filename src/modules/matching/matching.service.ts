@@ -50,7 +50,7 @@ export class MatchingService {
   async findById(id: number): Promise<Matching | null> {
     const matching = await this.matchingRepository.findOne({
       where: { id },
-      relations: ['toUser', 'fromUser'],
+      relations: ['toUser', 'fromUser', 'messages'],
     });
     return matching || null;
   }
@@ -73,13 +73,13 @@ export class MatchingService {
     const matchingRequest = await this.matchingRepository.find({
       where: [
         {
-        toUser: user,
-        deletedAt: null,
+          toUser: user,
+          deletedAt: null,
         },
         {
           fromUser: user,
-          deletedAt: null
-        }
+          deletedAt: null,
+        },
       ],
       select: ['id', 'fromUser', 'toUser', 'requestedat', 'accept'],
       relations: ['fromUser', 'toUser'],

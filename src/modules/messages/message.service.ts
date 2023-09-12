@@ -59,7 +59,7 @@ export class MessageService implements IMessage {
     matching.lastMessageSent = savedMessage;
     // matching.lastMessageSent = savedMessage;
     await this.matchingRepository.save(matching);
-    return;
+    return savedMessage;
   }
 
   getMessagesByMatchingId(conversationId: number): Promise<Message[]> {

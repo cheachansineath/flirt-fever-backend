@@ -12,6 +12,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './modules/auth/auth.guard';
 import { JwtStrategy } from './modules/auth/jwt.strategy';
 import { ChatModule } from './modules/chat/chat.module';
+import { MessagesModule } from './modules/messages/messages.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { ChatModule } from './modules/chat/chat.module';
     VoteModule,
     AuthModule,
     ChatModule,
+    MessagesModule,
+    EventEmitterModule.forRoot(),
   ],
   controllers: [],
   providers: [

@@ -75,10 +75,12 @@ export class MatchingService {
         {
           toUser: user,
           deletedAt: null,
+          accept: true,
         },
         {
           fromUser: user,
           deletedAt: null,
+          accept: true,
         },
       ],
       select: ['id', 'fromUser', 'toUser', 'requestedat', 'accept'],

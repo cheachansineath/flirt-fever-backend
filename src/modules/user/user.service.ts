@@ -274,7 +274,7 @@ export class UserService {
   }
 
   public getOne(id: number): Promise<any> {
-    return this.userRepository.findOneOrFail({ id });
+    return this.findById(id);
   }
 
   async dataForApi(user: User): Promise<any> {

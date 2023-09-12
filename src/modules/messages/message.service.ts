@@ -61,4 +61,14 @@ export class MessageService implements IMessage {
     await this.matchingRepository.save(matching);
     return;
   }
+
+  getMessagesByMatchingId(conversationId: number): Promise<Message[]> {
+    return this.messageRepository.find({
+      where: { matching: { id: conversationId } },
+      order: {
+        createAt: 'DESC',
+      },
+      relations: ['author'],
+    });
+  }
 }

@@ -50,7 +50,7 @@ export class MatchingService {
   async findById(id: number): Promise<Matching | null> {
     const matching = await this.matchingRepository.findOne({
       where: { id },
-      relations: ['toUser', 'fromUser', 'messages'],
+      relations: ['toUser', 'fromUser', 'messages', 'messages.author'],
     });
     return matching || null;
   }

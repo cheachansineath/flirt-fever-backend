@@ -14,7 +14,7 @@ const validMimeTypes: validMimeType[] = [
 
 export const saveImageToStorage = {
     storage: diskStorage({
-        destination: '/home/ubuntu/uploads/',
+        destination: process.env.FILE_PATH,
         filename: (req, file, cb) => {
             const fileExtension: string = path.extname(file.originalname);
             const fileName: string = uuidv4() + fileExtension;

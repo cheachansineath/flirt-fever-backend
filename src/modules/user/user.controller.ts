@@ -43,7 +43,7 @@ export class UserController {
   @Public()
   @Get('files/:imageName')
   async getImage(@Param('imageName') imageName: string, @Res() res: Response) {
-    const imagePath = path.join(__dirname, `../../../../uploads/${imageName}`)
+    const imagePath = path.join(__dirname, `/home/ubuntu/uploads/${imageName}`)
     const fileStream = fs.createReadStream(imagePath);
     fileStream.pipe(res);
   }

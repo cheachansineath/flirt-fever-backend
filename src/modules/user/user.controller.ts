@@ -43,14 +43,12 @@ export class UserController {
   @Public()
   @Get('files/:imageName')
   async getImage(@Param('imageName') imageName: string, @Res() res: Response) {
-    try{
       const imagePath = path.join(__dirname, `${process.env.FILE_PATH}/${imageName}`)
+      if (!fs.existsSync(imagePath)) {
+        throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'File not found' });
+      }
       const fileStream = fs.createReadStream(imagePath);
       fileStream.pipe(res);
-    } catch {
-      throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'Image not found' });
-    }
-    
   }
 
   @Get('/username/:username')

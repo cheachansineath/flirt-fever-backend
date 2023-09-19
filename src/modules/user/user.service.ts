@@ -152,13 +152,7 @@ export class UserService {
     if (preference) {
       user.preference = preference;
     } else {
-      if (!user.preference) {
-        if (user.gender == 'male') {
-          user.preference = 'female';
-        } else {
-          user.preference = 'male';
-        }
-      }
+      user.preference = "any";
     }
     if (interest != null) {
       user.interest = interest;

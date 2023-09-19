@@ -201,7 +201,7 @@ export class UserService {
     const currentUser = await this.findById(userId);
     if (currentUser != null) {
       const lastRow = await this.getLastRow();
-      // console.log(currentUser.page);
+      console.log(currentUser.page);
       let result: User;
       while (currentUser.page <= lastRow) {
         if (currentUser.page == currentUser.id) {
@@ -226,6 +226,7 @@ export class UserService {
               'location',
               'bio',
               'profile_url',
+              'dob'
             ],
           });
         } else {
@@ -248,6 +249,7 @@ export class UserService {
               'location',
               'bio',
               'profile_url',
+              'dob'
             ],
           });
         }

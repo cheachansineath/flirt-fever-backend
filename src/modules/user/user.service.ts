@@ -34,6 +34,7 @@ export class UserService {
         'location',
         'bio',
         'profile_url',
+        'dob'
       ],
     });
   }
@@ -57,6 +58,7 @@ export class UserService {
         'interest',
         'page',
         'preference',
+        'dob'
       ],
     });
     // return this.validateUser(user);
@@ -79,6 +81,7 @@ export class UserService {
         'bio',
         'profile_url',
         'password',
+        'dob'
       ],
     });
     // return this.validateUser(user);
@@ -107,6 +110,7 @@ export class UserService {
         'interest',
         'page',
         'preference',
+        'dob'
       ],
     });
     return this.validateUser(user);
@@ -128,6 +132,7 @@ export class UserService {
     bio: string,
     preference: string,
     interest: string[],
+    dob: string
   ): Promise<User | BadRequestException> {
     let user = await this.findById(userId);
     if (user.verify != true) {
@@ -143,6 +148,7 @@ export class UserService {
     user.age = age;
     user.location = location;
     user.bio = bio;
+    user.dob = dob;
     if (preference) {
       user.preference = preference;
     } else {

@@ -34,10 +34,10 @@ export class UserController {
   }
 
   @Post()
-  async updateUser(@Req() request, @Body() {gender, height, weight, age, location, bio = "", preference = null, interest = null}: UserUpdateDto) {
+  async updateUser(@Req() request, @Body() {gender, height, weight, age, location, bio = "", preference = null, interest = null, dob}: UserUpdateDto) {
     const user = request.user;
     const userId = user.sub;
-    return this.userService.updateUser(userId, gender, height, weight, age, location, bio, preference, interest);
+    return this.userService.updateUser(userId, gender, height, weight, age, location, bio, preference, interest, dob);
   }
 
   @Public()

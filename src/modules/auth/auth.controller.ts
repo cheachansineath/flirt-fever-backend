@@ -10,13 +10,13 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  signIn(@Body() signInDto: signInDto) {
-    return this.authService.signIn(signInDto.email, signInDto.password);
+  async signIn(@Body() signInDto: signInDto) {
+    return await this.authService.signIn(signInDto.email, signInDto.password);
   }
 
   @Public()
   @Post('signup')
-  singUup(@Body() signUpDto: signUpDto) {
-    return this.authService.signUp(signUpDto.username, signUpDto.password, signUpDto.email);
+  async singUp(@Body() signUpDto: signUpDto) {
+    return await this.authService.signUp(signUpDto.username, signUpDto.password, signUpDto.email);
   }
 }

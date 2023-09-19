@@ -56,6 +56,9 @@ export class User {
   @Column({ nullable: true })
   preference: string;
 
+  @Column({ nullable: true })
+  dob: string;
+
   @Column({ type: 'timestamp', name: 'deletedAt', nullable: true })
   deletedAt: Date;
 

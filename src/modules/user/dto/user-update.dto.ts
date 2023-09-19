@@ -23,4 +23,6 @@ export class UserUpdateDto {
     preference: string
 
     interest: string[]
+
+    dob: string
 }

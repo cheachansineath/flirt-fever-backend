@@ -19,4 +19,19 @@ export class OtpController {
     }
     throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'User not found' })
   }
+
+  @Public()
+  @Post('resend')
+  async resendOtp(@Body() {email}) {
+    const user = await this.userService.findByEmail(email);
+    if (user != null){
+      const verify = await this.otpService.resendOtp(user.id, email);
+      const result = await this.userService.updateVerify(verify, user.id);
+      if (result) {
+        return {message: "Otp resent!!!"}
+      }
+      throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'no otp for this user' })
+    }
+    throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'User not found' })
+  }
 }

@@ -234,7 +234,7 @@ export class UserService {
               verify: true,
               id: currentUser.page,
               deletedAt: null,
-              preference: currentUser.preference,
+              gender: currentUser.preference,
             },
             select: [
               'id',

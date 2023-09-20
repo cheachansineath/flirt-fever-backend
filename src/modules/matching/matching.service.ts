@@ -86,8 +86,22 @@ export class MatchingService {
       select: ['id', 'fromUser', 'toUser', 'requestedat', 'accept'],
       relations: ['fromUser', 'toUser'],
     });
-    console.log(matchingRequest);
     return matchingRequest || null;
+  }
+
+  async getAllUserMatchingRequest(userId: number): Promise<Matching[] | null> {
+    const user = await this.userService.findById(userId);
+    const matchingRequests = await this.matchingRepository.find({
+      where: [
+        {
+          toUser: user,
+          deletedAt: null,
+        }
+      ],
+      select: ['id', 'fromUser', 'toUser', 'requestedat', 'accept'],
+      relations: ['fromUser', 'toUser'],
+    });
+    return matchingRequests || null;
   }
 
   async deleteMatching(id: number): Promise<Matching> {

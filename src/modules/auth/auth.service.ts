@@ -53,7 +53,10 @@ export class AuthService {
           const pin = await this.otpService.sendOtp(email);
           await this.userService.saveUser(user);
           await this.otpService.saveOtp(user, pin);
-          return { message: 'Sign up successfully' };
+
+          const payload = { sub: user.id, username: user.username };
+          const access_token = await this.jwtService.signAsync(payload);
+          return { message: 'Sign up successfully', access_token, username: user.username };
         } catch {
           throw new InternalServerErrorException();
         }

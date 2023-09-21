@@ -34,18 +34,21 @@ export class UserController {
   }
 
   @Post()
-  async updateUser(@Req() request, @Body() {gender, height, weight, age, location, bio = "", preference = null, interest = null}: UserUpdateDto) {
+  async updateUser(@Req() request, @Body() {gender, height, weight, age, location, bio = "", preference = null, interest = null, dob}: UserUpdateDto) {
     const user = request.user;
     const userId = user.sub;
-    return this.userService.updateUser(userId, gender, height, weight, age, location, bio, preference, interest);
+    return this.userService.updateUser(userId, gender, height, weight, age, location, bio, preference, interest, dob);
   }
 
   @Public()
   @Get('files/:imageName')
   async getImage(@Param('imageName') imageName: string, @Res() res: Response) {
-    const imagePath = path.join(__dirname, `../../../../uploads/${imageName}`)
-    const fileStream = fs.createReadStream(imagePath);
-    fileStream.pipe(res);
+      const imagePath = path.join(__dirname, `${process.env.FILE_PATH}/${imageName}`)
+      if (!fs.existsSync(imagePath)) {
+        throw new BadRequestException('Something bad happened', { cause: new Error(), description: 'File not found' });
+      }
+      const fileStream = fs.createReadStream(imagePath);
+      fileStream.pipe(res);
   }
 
   @Get('/username/:username')

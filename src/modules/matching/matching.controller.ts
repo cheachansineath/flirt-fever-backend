@@ -31,6 +31,11 @@ export class MatchingController {
     return await this.matchingService.getUserMatchingRequest(request.user.sub);
   }
 
+  @Get('requests/all')
+  async getAllMatchingRequest(@Req() request) {
+    return await this.matchingService.getAllUserMatchingRequest(request.user.sub);
+  }
+
   @Get(':id')
   async getMatching(@Param('id') id: number) {
     return await this.matchingService.findById(id);

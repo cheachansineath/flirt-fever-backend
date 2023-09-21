@@ -68,4 +68,18 @@ export class OtpService {
   async findByUserId(user: number): Promise<Otp | undefined> {
     return await this.otpRepository.findOne({ where: { user }})
   }
+
+  async resendOtp(user: number, email: string): Promise<boolean> {
+    const otp = await this.findByUserId(user);
+
+    if (otp !== null) {
+      const newPin = this.generateRandomOtp();
+      otp.pin = newPin;
+      await this.otpRepository.save(otp);
+      await this.emailService.sendEmail(email, "FlirtFever Confirmation Code", "Your FlirtFever Confirmation Code is: " + newPin);
+      return true
+    }
+
+    return false
+  }
 }

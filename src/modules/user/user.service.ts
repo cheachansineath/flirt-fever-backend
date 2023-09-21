@@ -34,6 +34,7 @@ export class UserService {
         'location',
         'bio',
         'profile_url',
+        'dob'
       ],
     });
   }
@@ -57,6 +58,7 @@ export class UserService {
         'interest',
         'page',
         'preference',
+        'dob'
       ],
     });
     // return this.validateUser(user);
@@ -79,6 +81,7 @@ export class UserService {
         'bio',
         'profile_url',
         'password',
+        'dob'
       ],
     });
     // return this.validateUser(user);
@@ -107,6 +110,7 @@ export class UserService {
         'interest',
         'page',
         'preference',
+        'dob'
       ],
     });
     return this.validateUser(user);
@@ -128,6 +132,7 @@ export class UserService {
     bio: string,
     preference: string,
     interest: string[],
+    dob: string
   ): Promise<User | BadRequestException> {
     let user = await this.findById(userId);
     if (user.verify != true) {
@@ -143,16 +148,11 @@ export class UserService {
     user.age = age;
     user.location = location;
     user.bio = bio;
+    user.dob = dob;
     if (preference) {
       user.preference = preference;
     } else {
-      if (!user.preference) {
-        if (user.gender == 'male') {
-          user.preference = 'female';
-        } else {
-          user.preference = 'male';
-        }
-      }
+      user.preference = "any";
     }
     if (interest != null) {
       user.interest = interest;
@@ -201,7 +201,7 @@ export class UserService {
     const currentUser = await this.findById(userId);
     if (currentUser != null) {
       const lastRow = await this.getLastRow();
-      // console.log(currentUser.page);
+      console.log(currentUser.page);
       let result: User;
       while (currentUser.page <= lastRow) {
         if (currentUser.page == currentUser.id) {
@@ -226,6 +226,7 @@ export class UserService {
               'location',
               'bio',
               'profile_url',
+              'dob'
             ],
           });
         } else {
@@ -234,7 +235,7 @@ export class UserService {
               verify: true,
               id: currentUser.page,
               deletedAt: null,
-              preference: currentUser.preference,
+              gender: currentUser.preference,
             },
             select: [
               'id',
@@ -248,6 +249,7 @@ export class UserService {
               'location',
               'bio',
               'profile_url',
+              'dob'
             ],
           });
         }
